@@ -25,7 +25,7 @@ def main(args):
 def get_parser():
     """Define an argument parser"""
     parser = argparse.ArgumentParser(
-        description='reduce your effect to act as likers'
+        description='reduce your effort to act as likers'
     )
     parser.add_argument('credentials',
                         help='- credential file of usernames and passwords')
