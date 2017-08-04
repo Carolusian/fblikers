@@ -4,12 +4,12 @@
 # File: dotlikers/dotlikers.py
 # Author: Carolusian <https://github.com/carolusian>
 # Date: 29.07.2017
-# Last Modified Date: 29.07.2017
+# Last Modified Date: 30.07.2017
 #
 # Copyright 2017 Carolusian
 
 import argparse
-from users import load_users
+from .users import load_users
 
 
 def main(args):

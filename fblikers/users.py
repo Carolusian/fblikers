@@ -4,13 +4,14 @@
 # File: dotlikers/users.py
 # Author: Carolusian <https://github.com/carolusian>
 # Date: 29.07.2017
-# Last Modified Date: 29.07.2017
+# Last Modified Date: 30.07.2017
 #
 # Copyright 2017 Carolusian
 
 import csv
 import time
 from selenium import webdriver
+from .errors import UnsupportedPlatformException
 
 
 class User:
@@ -55,12 +56,27 @@ class User:
         # browser.quit()
 
 
-class FacebookUser:
+class FacebookUser(User):
     pass
 
 
-class InstagramUser:
+class InstagramUser(User):
     pass
+
+
+def user_from_dict(row):
+    username = row['username']
+    password = row['password']
+    platform = row['platform']
+
+    if platform == 'facebook':
+        return FacebookUser(username, password, platform)
+    elif platform == 'instagram':
+        return InstagramUser(username, password, platform)
+    else:
+        raise UnsupportedPlatformException(
+            "haha"
+        )
 
 
 def load_users(credential_file):
@@ -71,11 +87,6 @@ def load_users(credential_file):
         password: password for either facebook or instagram
         platform: platform type ('facebook' or 'instagram')
     """
-    def user_from_dict(row):
-        username = row['username']
-        password = row['password']
-        platform = row['platform']
-        return User(username, password, platform)
 
     with open(credential_file) as f:
         f_csv = csv.DictReader(f)
