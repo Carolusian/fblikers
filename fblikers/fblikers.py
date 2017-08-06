@@ -10,16 +10,20 @@
 
 import argparse
 from .users import load_users
+from .actions import login, sleep, USER_ACTIONS
 
 
 def main(args):
     """Entrypoint of dotlikers"""
     users = load_users(args['credentials'])
-    action = args['action']
+    action_type = args['action']
     target_url = args['target_url']
 
     for user in users:
-        user.take(action, target_url)
+        sleep()
+        browser = login(user)
+        sleep()
+        USER_ACTIONS[action_type](user, target_url, browser)
 
 
 def get_parser():

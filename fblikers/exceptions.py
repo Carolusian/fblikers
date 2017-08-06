@@ -6,5 +6,5 @@
 # Last Modified Date: 30.07.2017
 
 
-class UnsupportedPlatformError(Exception):
+class UnsupportedPlatformException(Exception):
     pass

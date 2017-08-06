@@ -6,7 +6,8 @@
 # Last Modified Date: 30.07.2017
 
 import unittest
-from dotlikers.users import user_from_dict
+from fblikers.users import user_from_dict
+from fblikers.exceptions import UnsupportedPlatformException
 
 
 class DotlikersTest(unittest.TestCase):
@@ -14,9 +15,11 @@ class DotlikersTest(unittest.TestCase):
         pass
 
     def test_user_loader(self):
-        row = {
-            'username': 'username',
-            'password': 'password',
-            'platform': 'unknow',
-        }
-        user_from_dict(row)
+        with self.assertRaises(UnsupportedPlatformException) as context:
+            row = {
+                'username': 'username',
+                'password': 'password',
+                'platform': 'unknown',
+            }
+            user_from_dict(row)
+        self.assertTrue('Unsupported platform' in str(context.exception))

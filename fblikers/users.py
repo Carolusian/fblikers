@@ -11,7 +11,7 @@
 import csv
 import time
 from selenium import webdriver
-from .errors import UnsupportedPlatformException
+from .exceptions import UnsupportedPlatformException
 
 
 class User:
@@ -20,48 +20,45 @@ class User:
         self.password = password
         self.platform = platform
 
-    def take(self, action, target_url):
-        """Ask the user to take certain actions, e.g. like a facebook page
-
-        Args:
-            action: defined in actions.ActionType
-            target_url: the url of the target
-        """
-        browser = webdriver.Firefox()
-        browser.get('https://facebook.com')
-
-        time.sleep(5)
-        login = browser.find_element_by_id('email')
-        password = browser.find_element_by_id('pass')
-        login.send_keys(self.username)
-        password.send_keys(self.password)
-        browser.find_element_by_id('loginbutton').click()
-
-        # navigate to the target url
-        time.sleep(5)
-        browser.get(target_url)
-
-        time.sleep(5)
-        # elem = browser.find_element_by_xpath('//button[text()="Like"]')
-        # elem.click()
-
-        browser.execute_script("""
-          var elems = document.getElementsByClassName('UFILikeLink')[0].click();
-        """)
-        # for i in range(10):
-        #     elem = browser.find_element_by_xpath(
-        #         '//a[contains(@class, "UFILikeLink") and text()="Like"]'
-        #     )
-        #     elem.click()
-        # browser.quit()
+    # def take(self, action, target_url):
+    #     """Ask the user to take certain actions, e.g. like a facebook page
+    #
+    #     Args:
+    #         action: defined in actions.ActionType
+    #         target_url: the url of the target
+    #     """
+    #     browser = webdriver.Firefox()
+    #     browser.get('https://facebook.com')
+    #
+    #     time.sleep(5)
+    #
+    #     # navigate to the target url
+    #     time.sleep(5)
+    #     browser.get(target_url)
+    #
+    #     time.sleep(5)
+    #     # elem = browser.find_element_by_xpath('//button[text()="Like"]')
+    #     # elem.click()
+    #
+    #     browser.execute_script("""
+    #       var elems = document.getElementsByClassName('UFILikeLink')[0].click();
+    #     """)
+    #     # for i in range(10):
+    #     #     elem = browser.find_element_by_xpath(
+    #     #         '//a[contains(@class, "UFILikeLink") and text()="Like"]'
+    #     #     )
+    #     #     elem.click()
+    #     # browser.quit()
 
 
 class FacebookUser(User):
-    pass
+    def __init__(self, username, password):
+        return super().__init__(username, password, 'facebook')
 
 
 class InstagramUser(User):
-    pass
+    def __init__(self, username, password):
+        return super().__init__(username, password, 'instagram')
 
 
 def user_from_dict(row):
@@ -70,12 +67,12 @@ def user_from_dict(row):
     platform = row['platform']
 
     if platform == 'facebook':
-        return FacebookUser(username, password, platform)
+        return FacebookUser(username, password)
     elif platform == 'instagram':
-        return InstagramUser(username, password, platform)
+        return InstagramUser(username, password)
     else:
         raise UnsupportedPlatformException(
-            "haha"
+            "Unsupported platform: {}".format(platform)
         )
 
 
