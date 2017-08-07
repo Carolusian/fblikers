@@ -14,6 +14,7 @@ from enum import Enum
 from random import randint
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import ElementNotInteractableException
 from .users import FacebookUser, InstagramUser
 
 
@@ -25,6 +26,14 @@ class ActionType(Enum):
 def sleep(max_seconds=10):
     """Allow a user to wait for a few seconds before do something"""
     time.sleep(randint(1, max_seconds))
+
+
+def click(elem):
+    try:
+        elem.click()
+    except ElementNotInteractableException:
+        # TODO
+        pass
 
 
 def login(user):
@@ -67,7 +76,7 @@ def facebook_like(by_user, target_url, browser_instance):
     # only do upto 25 likes
     for elem in likable_elems[:25]:
         sleep(max_seconds=2)
-        elem.click()
+        click(elem)
 
 
 def instagram_like(by_user, target_url, browser_instance):

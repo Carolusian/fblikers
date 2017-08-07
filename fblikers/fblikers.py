@@ -63,4 +63,5 @@ def command_line_runner():
 
 
 if __name__ == '__main__':
+    # parse command line arguments and run the main function
     command_line_runner()
