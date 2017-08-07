@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# File: dotlikers/users.py
+# File: fblikers/users.py
 # Author: Carolusian <https://github.com/carolusian>
 # Date: 29.07.2017
 # Last Modified Date: 30.07.2017
@@ -9,8 +9,6 @@
 # Copyright 2017 Carolusian
 
 import csv
-import time
-from selenium import webdriver
 from .exceptions import UnsupportedPlatformException
 
 
@@ -19,36 +17,6 @@ class User:
         self.username = username
         self.password = password
         self.platform = platform
-
-    # def take(self, action, target_url):
-    #     """Ask the user to take certain actions, e.g. like a facebook page
-    #
-    #     Args:
-    #         action: defined in actions.ActionType
-    #         target_url: the url of the target
-    #     """
-    #     browser = webdriver.Firefox()
-    #     browser.get('https://facebook.com')
-    #
-    #     time.sleep(5)
-    #
-    #     # navigate to the target url
-    #     time.sleep(5)
-    #     browser.get(target_url)
-    #
-    #     time.sleep(5)
-    #     # elem = browser.find_element_by_xpath('//button[text()="Like"]')
-    #     # elem.click()
-    #
-    #     browser.execute_script("""
-    #       var elems = document.getElementsByClassName('UFILikeLink')[0].click();
-    #     """)
-    #     # for i in range(10):
-    #     #     elem = browser.find_element_by_xpath(
-    #     #         '//a[contains(@class, "UFILikeLink") and text()="Like"]'
-    #     #     )
-    #     #     elem.click()
-    #     # browser.quit()
 
 
 class FacebookUser(User):
