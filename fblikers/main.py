@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# File: fblikers/fblikers.py
+# File: fblikers/main.py
 # Author: Carolusian <https://github.com/carolusian>
 # Date: 29.07.2017
 # Last Modified Date: 30.07.2017
