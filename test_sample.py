@@ -10,7 +10,8 @@ from fblikers.users import user_from_dict
 from fblikers.exceptions import UnsupportedPlatformException
 
 
-class DotlikersTest(unittest.TestCase):
+class FBlikersTest(unittest.TestCase):
+
     def setUp(self):
         pass
 
@@ -23,3 +24,7 @@ class DotlikersTest(unittest.TestCase):
             }
             user_from_dict(row)
         self.assertTrue('Unsupported platform' in str(context.exception))
+
+
+    def test_login(self):
+        pass
