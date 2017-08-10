@@ -12,6 +12,7 @@ import time
 import itertools
 from enum import Enum
 from random import randint
+from contextlib import suppress
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import ElementNotInteractableException
@@ -30,11 +31,8 @@ def sleep(min_seconds=1, max_seconds=10):
 
 
 def click(elem):
-    try:
+    with suppress(ElementNotInteractableException):
         elem.click()
-    except ElementNotInteractableException:
-        # TODO
-        pass
 
 
 def login(user):
