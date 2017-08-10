@@ -124,7 +124,7 @@ def instagram_like(by_user, target_url, browser_instance):
         xpath = '//div[@class="_si7dy"]'
         cards = b.find_elements(By.XPATH, xpath)
         for card in cards:
-            # need to click twice to get a popup window
+            # need to click twice to get the window popped up
             click(card)
             click(card)
 
