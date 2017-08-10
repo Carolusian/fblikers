@@ -6,9 +6,13 @@
 # Last Modified Date: 30.07.2017
 
 import os
+import time
 import unittest
 from selenium.webdriver.common.by import By
-from fblikers.users import user_from_dict, load_users
+from fblikers.users import (user_from_dict,
+                            load_users,
+                            FacebookUser,
+                            InstagramUser)
 from fblikers.exceptions import UnsupportedPlatformException
 from fblikers.actions import login
 
@@ -30,7 +34,31 @@ class FBlikersTest(unittest.TestCase):
             user_from_dict(row)
         self.assertTrue('Unsupported platform' in str(context.exception))
 
-    def test_login(self):
-        browsers = [login(user) for user in self.sample_users]
+    def test_facebook_login(self):
+        browsers = [login(user) for user in self.sample_users
+                    if isinstance(user, FacebookUser)]
+
+        # test facebook login
         for browser in browsers:
-            browser.find_elements(B
+            elems = browser.find_elements(By.XPATH,
+                                          '//a[text()="Home"]')
+            self.assertEqual(len(elems), 1)
+            browser.quit()
+
+    def test_instagram_login(self):
+        browsers = [login(user) for user in self.sample_users
+                    if isinstance(user, InstagramUser)]
+
+        # test instagram login
+        for browser in browsers:
+            time.sleep(3)
+            elems = browser.find_elements(
+                By.XPATH,
+                '//a[contains(@class, "coreSpriteDesktopNavProfile")]'
+            )
+            self.assertEqual(len(elems), 1)
+            browser.quit()
+
+
+if __name__ == '__main__':
+    unittest.main()

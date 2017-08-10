@@ -8,3 +8,7 @@
 
 class UnsupportedPlatformException(Exception):
     pass
+
+
+class UnsupportedUrlException(Exception):
+    pass
