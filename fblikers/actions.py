@@ -16,6 +16,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import ElementNotInteractableException
 from .users import FacebookUser, InstagramUser
+from .exceptions import UnsupportedPlatformException
 
 
 class ActionType(Enum):
@@ -55,10 +56,23 @@ def login(user):
         password.send_keys(user.password)
 
         browser.find_element_by_id('loginbutton').click()
-        return browser
     elif isinstance(user, InstagramUser):
-        # TODO
-        pass
+        browser.get('https://www.instagram.com/accounts/login/')
+
+        time.sleep(3)
+        login = browser.find_element_by_name('username')
+        password = browser.find_element_by_name('password')
+
+        login.send_keys(user.username)
+        password.send_keys(user.password)
+
+        browser.find_elements(By.XPATH, '//button')[0].click()
+    else:
+        raise UnsupportedPlatformException(
+            "Unsupported platform: {}".format(user.platform)
+        )
+
+    return browser
 
 
 def facebook_like(by_user, target_url, browser_instance):
