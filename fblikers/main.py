@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# File: fblikers/fblikers.py
+# File: fblikers/main.py
 # Author: Carolusian <https://github.com/carolusian>
 # Date: 29.07.2017
 # Last Modified Date: 30.07.2017
@@ -16,7 +16,7 @@ from .actions import login, sleep, USER_ACTIONS
 def main(args):
     """Entrypoint of dotlikers"""
     all_users = load_users(args['credentials'])
-    action_type = args['action']
+    action_types = [ action for action in args['actions'].split(',') if action]
     target_url = args['target_url']
 
     # select correspond users for the target url
@@ -30,7 +30,8 @@ def main(args):
         sleep()
         browser = login(user)
         sleep()
-        USER_ACTIONS[action_type](user, target_url, browser)
+        for action_type in action_types:
+            USER_ACTIONS[action_type](user, target_url, browser)
         # browser.quit()
 
 
@@ -49,7 +50,7 @@ def get_parser():
     )
     parser.add_argument('credentials',
                         help='- credential file of usernames and passwords')
-    parser.add_argument('action',
+    parser.add_argument('actions',
                         help='- tell what kind of action the users will take')
     parser.add_argument('target_url',
                         help='- the url of the target of the action')
