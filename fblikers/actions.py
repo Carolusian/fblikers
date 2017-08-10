@@ -78,8 +78,36 @@ def facebook_like(by_user, target_url, browser_instance):
         sleep(max_seconds=2)
         click(elem)
 
+    # return elements clicked
+    return likable_elems[:25]
+
+
+def facebook_follow(by_user, target_url, browser_instance):
+    b = browser_instance
+    b.get(target_url)
+    sleep()
+    xpaths = [
+        '//button[text()="Follow"]',
+    ]
+
+    elems = [list(b.find_elements(By.XPATH, xpath)) for xpath in xpaths]
+    followable_elems = list(itertools.chain(*elems))
+
+    # normally, there shall be only one followable elems
+    for elem in followable_elems:
+        sleep(max_seconds=2)
+        click(elem)
+
+    # return elements clicked
+    return followable_elems
+
 
 def instagram_like(by_user, target_url, browser_instance):
+    # TODO
+    pass
+
+
+def instagram_follow(by_user, target_url, browser_instance):
     # TODO
     pass
 
@@ -91,6 +119,14 @@ def like(by_user, target_url, browser_instance):
         instagram_like(by_user, target_url, browser_instance)
 
 
+def follow(by_user, target_url, browser_instance):
+    if isinstance(by_user, FacebookUser):
+        facebook_follow(by_user, target_url, browser_instance)
+    elif isinstance(by_user, InstagramUser):
+        instagram_follow(by_user, target_url, browser_instance)
+
+
 USER_ACTIONS = {
     'like': like,
+    'follow': follow,
 }
