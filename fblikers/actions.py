@@ -16,7 +16,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import ElementNotInteractableException
 from .users import FacebookUser, InstagramUser
-from .exceptions import UnsupportedPlatformException
+from .exceptions import UnsupportedPlatformException, UnsupportedUrlException
 
 
 class ActionType(Enum):
@@ -24,9 +24,9 @@ class ActionType(Enum):
     FOLLOW = 'follow'
 
 
-def sleep(max_seconds=10):
+def sleep(min_seconds=1, max_seconds=10):
     """Allow a user to wait for a few seconds before do something"""
-    time.sleep(randint(1, max_seconds))
+    time.sleep(randint(min_seconds, max_seconds))
 
 
 def click(elem):
@@ -117,8 +117,40 @@ def facebook_follow(by_user, target_url, browser_instance):
 
 
 def instagram_like(by_user, target_url, browser_instance):
-    # TODO
-    pass
+    b = browser_instance
+    b.get(target_url)
+    sleep(min_seconds=3)
+
+    if 'explore/tags/' in target_url:
+        # need to click pic to make likes in the popup window
+        xpath = '//div[@class="_si7dy"]'
+        cards = b.find_elements(By.XPATH, xpath)
+        for card in cards:
+            # need to click twice to get a popup window
+            click(card)
+            click(card)
+
+            # like in the popup
+            sleep(max_seconds=2)
+            likable_elems = b.find_elements(
+                By.XPATH,
+                '//span[contains(@class, "coreSpriteHeartOpen")]'
+            )
+            for elem in likable_elems:
+                click(elem)
+
+            # close the popup
+            sleep(max_seconds=2)
+            closable_elems = b.find_elements(
+                By.XPATH,
+                '//button[@class="_dcj9f"]'
+            )
+            for elem in closable_elems:
+                click(elem)
+    else:
+        raise UnsupportedPlatformException(
+            'Unsupported instagram target url: {}': target_url
+        )
 
 
 def instagram_follow(by_user, target_url, browser_instance):
