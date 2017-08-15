@@ -147,7 +147,7 @@ def instagram_like(by_user, target_url, browser_instance):
                 click(elem)
     else:
         raise UnsupportedPlatformException(
-            'Unsupported instagram target url: {}': target_url
+            'Unsupported instagram target url: {}'.format(target_url)
         )
 
 
