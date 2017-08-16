@@ -7,12 +7,19 @@
 #
 # Copyright 2017 Carolusian
 
+import os
+import sys
 from fblikers.main import command_line_runner
 try:
     from tkinter import *
     from tkinter.ttk import *
 except ImportError:
     from Tkinter import *
+
+
+dirpath = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
+os.environ['PATH'] += os.pathsep + dirpath
+os.environ['PATH'] += os.pathsep + os.path.join(dirpath, 'bin')
 
 
 class FBLikersGui(Frame):
