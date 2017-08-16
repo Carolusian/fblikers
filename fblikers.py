@@ -16,8 +16,11 @@ try:
 except ImportError:
     from Tkinter import *
 
+try:
+	dirpath = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
+except NameError:
+    dirpath = os.path.dirname(os.path.abspath(sys.argv[0]))
 
-dirpath = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
 os.environ['PATH'] += os.pathsep + dirpath
 os.environ['PATH'] += os.pathsep + os.path.join(dirpath, 'bin')
 
