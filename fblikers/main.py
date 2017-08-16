@@ -57,9 +57,12 @@ def get_parser():
     return parser
 
 
-def command_line_runner():
+def command_line_runner(args=[]):
     parser = get_parser()
-    args = vars(parser.parse_args())
+    if len(args):
+        args = vars(parser.parse_args(args))
+    else:
+        args = vars(parser.parse_args())
     main(args)
 
 
