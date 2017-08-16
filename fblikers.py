@@ -8,20 +8,20 @@
 # Copyright 2017 Carolusian
 
 from fblikers.main import command_line_runner
-from tkinter import Tk, BOTH, LEFT, RIGHT, X
-from tkinter.ttk import Frame, Button, Style, Label, Entry
-from tkinter import Menu, filedialog, END, Checkbutton, IntVar, StringVar
+try:
+    from tkinter import *
+    from tkinter.ttk import *
+except ImportError:
+    from Tkinter import *
 
 
 class FBLikersGui(Frame):
     def __init__(self):
-        super().__init__()
+        Frame.__init__(self)
         self.ui()
 
     def ui(self):
         self.master.title('fblikers - your like factory')
-        self.style = Style()
-        self.style.theme_use('default')
         self.center_window()
         self.pack(fill=BOTH, expand=1)
 
