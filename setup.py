@@ -8,7 +8,7 @@ Usage:
 from setuptools import setup
 
 APP = ['fblikers.py']
-DATA_FILES = ['fblikers.icns']
+DATA_FILES = ['fblikers.icns', 'bin/geckodriver']
 OPTIONS = {
     'argv_emulation': True,
     'iconfile': 'fblikers.icns',
