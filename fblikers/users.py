@@ -12,7 +12,7 @@ import csv
 from .exceptions import UnsupportedPlatformException
 
 
-class User:
+class User(object):
     def __init__(self, username, password, platform='facebook'):
         self.username = username
         self.password = password
@@ -21,12 +21,16 @@ class User:
 
 class FacebookUser(User):
     def __init__(self, username, password):
-        return super().__init__(username, password, 'facebook')
+        return super(FacebookUser, self).__init__(username,
+                                                  password,
+                                                  'facebook')
 
 
 class InstagramUser(User):
     def __init__(self, username, password):
-        return super().__init__(username, password, 'instagram')
+        return super(InstagramUser, self).__init__(username,
+                                                   password,
+                                                   'instagram')
 
 
 def user_from_dict(row):

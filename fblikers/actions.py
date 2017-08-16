@@ -10,19 +10,12 @@
 
 import time
 import itertools
-from enum import Enum
 from random import randint
-from contextlib import suppress
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import ElementNotInteractableException
 from .users import FacebookUser, InstagramUser
-from .exceptions import UnsupportedPlatformException, UnsupportedUrlException
-
-
-class ActionType(Enum):
-    LIKE = 'like'
-    FOLLOW = 'follow'
+from .exceptions import UnsupportedPlatformException
 
 
 def sleep(min_seconds=1, max_seconds=10):
@@ -31,8 +24,10 @@ def sleep(min_seconds=1, max_seconds=10):
 
 
 def click(elem):
-    with suppress(ElementNotInteractableException):
+    try:
         elem.click()
+    except ElementNotInteractableException:
+        pass
 
 
 def login(user):

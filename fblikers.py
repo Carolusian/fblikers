@@ -7,21 +7,29 @@
 #
 # Copyright 2017 Carolusian
 
+import os
+import sys
 from fblikers.main import command_line_runner
-from tkinter import Tk, BOTH, LEFT, RIGHT, X
-from tkinter.ttk import Frame, Button, Style, Label, Entry
-from tkinter import Menu, filedialog, END, Checkbutton, IntVar, StringVar
+from Tkinter import *
+import Tkinter, Tkconstants, tkFileDialog
+
+
+try:
+	dirpath = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
+except NameError:
+    dirpath = os.path.dirname(os.path.abspath(sys.argv[0]))
+
+os.environ['PATH'] += os.pathsep + dirpath
+os.environ['PATH'] += os.pathsep + os.path.join(dirpath, 'bin')
 
 
 class FBLikersGui(Frame):
     def __init__(self):
-        super().__init__()
+        Frame.__init__(self)
         self.ui()
 
     def ui(self):
         self.master.title('fblikers - your like factory')
-        self.style = Style()
-        self.style.theme_use('default')
         self.center_window()
         self.pack(fill=BOTH, expand=1)
 
@@ -75,7 +83,7 @@ class FBLikersGui(Frame):
 
     def locate_users(self):
         ftypes = [('CSV files', '*.csv'), ('All files', '*')]
-        dlg = filedialog.Open(self, filetypes=ftypes)
+        dlg = tkFileDialog.Open(self, filetypes=ftypes)
         fl = dlg.show()
 
         if fl != '':
