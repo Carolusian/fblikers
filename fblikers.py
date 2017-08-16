@@ -10,11 +10,9 @@
 import os
 import sys
 from fblikers.main import command_line_runner
-try:
-    from tkinter import *
-    from tkinter.ttk import *
-except ImportError:
-    from Tkinter import *
+from Tkinter import *
+import Tkinter, Tkconstants, tkFileDialog
+
 
 try:
 	dirpath = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
@@ -85,7 +83,7 @@ class FBLikersGui(Frame):
 
     def locate_users(self):
         ftypes = [('CSV files', '*.csv'), ('All files', '*')]
-        dlg = filedialog.Open(self, filetypes=ftypes)
+        dlg = tkFileDialog.Open(self, filetypes=ftypes)
         fl = dlg.show()
 
         if fl != '':
