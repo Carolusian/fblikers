@@ -10,12 +10,17 @@
 import os
 import sys
 from fblikers.main import command_line_runner
-from Tkinter import *
-import Tkinter, Tkconstants, tkFileDialog
+try:
+    from tkinter import *
+    from tkinter.ttk import *
+except ImportError:
+    from Tkinter import *
+    import Tkinter, Tkconstants, tkFileDialog
+
 
 
 try:
-	dirpath = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
+    dirpath = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
 except NameError:
     dirpath = os.path.dirname(os.path.abspath(sys.argv[0]))
 
